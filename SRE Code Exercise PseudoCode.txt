@@ -1,0 +1,50 @@
+SRE Code Exercise
+
+Confirmed that SSN= and CCN=
+Do you have sample files that I can use?
+Can I write this assuming all files to be processed are all in one directory
+	and then iterate through all files in said directory? Is writing this to run in Windows OK?
+Assume it can run in Linux
+
+Prerequisites
+gunzip utility
+python (or whatever language I end up using)
+
+Two Functions - Main and ParseFile
+
+Main
+	import os
+	vars
+	int fileSum
+	directory ='files'
+	Create file auditLog = 'SRE_Code_Exercise_AuditLog_<datetime>.log'
+	for each file
+		print in auditLog 'Processing file: ' + filename + '...'
+		PFObject = ParseFile ('filename.txt')
+		print in auditLog ''
+		print in auditLog '' + filename ' lines: ' + PFObject.lineSum
+		print in auditLog '' + filename ' removedLines: ' + PFObject.lineRemovedSum
+	fileSum++
+	print in auditLog 'All files have been processed. Total files processed: ' + fileSum
+	free auditLog
+
+
+ParseFile (accepts one file and returns two integers. )
+	vars
+	int lineSum
+	int lineRemovedSum
+	For each line in 'filename.txt'
+		gunzip 'filename.txt'
+		Create empty file 'filename_trimmed.txt'
+		For each line in 'filename.txt'
+			If line contains 'CC=' or 'SSN='
+				then nothing
+			else
+				print line in 'filename_trimmed.txt'
+				lineRemovedSum++
+			lineSum++
+		endFor
+		gzip 'filename_trimmed.txt'
+		Free files from memory/read
+	endFor
+	Return list or object (lineSum, lineRemovedSum)
