@@ -6,17 +6,18 @@ import shutil
 # These Global variables can be modified
 directory_input = 'InputFiles'
 directory_output = 'OutputFiles'
-match_string = [b"CC=", b"SSN="]    # must be list of bytes
+match_string = [b" CC=", b" SSN="]    # must be list of bytes
 archive_input = 'no'      # 'yes' means do archive input files. 'no' or any other means do not archive.
 
 
 def archive_file_redaction(dir_in, dir_out, dt, ai):
+    # Creates new datetime named archive folder and archives files into them. Does this for input and output files
     dir_in_arch = os.path.join(dir_in, str(dt))
     dir_out_arch = os.path.join(dir_out, str(dt))
-    if ai == 'yes':
+    if ai == 'yes': # checks if we are archiving input files or not
         os.mkdir(dir_in_arch)   # Create archive folder within dir_in including datetime(dt)
         for filename in os.scandir(dir_in):
-            # Move all files under dir_in into new archive folder
+            # Move all files under input directory into new archive folder
             filepath_arch_in = os.path.join(dir_in_arch, filename.name)
             if os.path.isdir(filename):
                 continue
@@ -25,14 +26,12 @@ def archive_file_redaction(dir_in, dir_out, dt, ai):
 
     os.mkdir(dir_out_arch)  # Create archive folder within dir_out including datetime(dt)
     for filename in os.scandir(dir_out):
-        # Move all files under dir_out into new archive folder
+        # Move all files under output directory into new archive folder
         filepath_arch_out = os.path.join(dir_out_arch, filename.name)
         if os.path.isdir(filename):
             continue
         else:
             shutil.move(filename, filepath_arch_out)
-
-    # Move all files under dir_out into new archive folder
 
 
 def single_file_redaction(dir_in, fn, dir_out, match_str):
