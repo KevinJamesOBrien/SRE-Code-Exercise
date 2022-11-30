@@ -35,7 +35,7 @@ def archive_file_redaction(dir_in, dir_out, dt, ai):
     # Move all files under dir_out into new archive folder
 
 
-def single_file_redaction(dir_in, fn, dir_out, match_string):
+def single_file_redaction(dir_in, fn, dir_out, match_str):
     # This function processes one file for file redaction
     # -- inputs --
     # dir_in - Directory for Input Files
@@ -52,7 +52,7 @@ def single_file_redaction(dir_in, fn, dir_out, match_string):
             # Open the output (redacted) file to append only good lines to. Creates if not present.
             # Initial file is .txt, will be compresed as .gz after lines are copied
             with open(os.path.join(str(dir_out), str(fn_output)), 'ab') as file_output:
-                if any(x in line for x in match_string):
+                if any(x in line for x in match_str):
                     # Checks if line in file contains any of the strings in the match_string.
                     # Writes to output file if not. Essentially leaves out the 'faulty' lines in the new file
                     line_count_faulty += 1
